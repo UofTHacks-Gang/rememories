@@ -1,7 +1,10 @@
 .venv
 venv/
 venv.bak/
-.env
 env/
-
+backend/.env
 backend/database/
+backend/google-cloud-sdk
+backend/photos
+venv/
+.env

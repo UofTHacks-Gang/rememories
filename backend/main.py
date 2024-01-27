@@ -1,5 +1,7 @@
 import base64
 import io
+from backend.facial_recognition import facial_recognition
+from backend.gemini import gemini
 from fastapi import FastAPI, Form, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
@@ -40,34 +42,10 @@ async def getfaces(file: UploadFile = File(...)):
     # image = Image.open(io.BytesIO(file))
     # image.show()
     # return {"upload_state": "complete"}
-    print(file)
-    file_path = f"/Users/rmaxin/Desktop/UofTHacks/Reminiscent/backend/search/{file.filename}"
-    with open(file_path, "wb") as new_file:
-        new_file.write(file.file.read())
     
-    df = DeepFace.find(img_path=file_path,db_path="/Users/rmaxin/Desktop/UofTHacks/Reminiscent/backend/database",detector_backend="retinaface")[0]
-    if len(df) > 0:
-        length = 15
-        if len(df) < 15:
-            length = len(df)
-
-        # Extracting the list of identities from the DataFrame
-        image_urls = df.iloc[0:length].identity
-        distance = df.iloc[0:length].distance
-        threshold = df.iloc[0].threshold
-        print(image_urls,distance )
-        print(threshold)
-        
-        # ['identities'].to_list()
-
-        image_data = []
-        for url in image_urls:
-            with open(url, "rb") as image_file:
-                encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
-                image_data.append(encoded_image)
-        
-        return JSONResponse(content={"images": image_data})
-    else:
-        # If no faces are found, return an empty list
-        print("no faces found")
-        return JSONResponse(content={"images": []})
+    file_path = f"/Users/rmaxin/Desktop/UofTHacks/Reminiscent/backend/search/{file.filename}"
+     
+    facial_recognition_data = facial_recognition(file_path)
+    description_data = gemini(facial_recognition_data)
+    print(description_data)
+    # result = cohere(description)
