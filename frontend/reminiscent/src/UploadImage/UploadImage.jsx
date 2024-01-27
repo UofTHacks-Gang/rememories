@@ -36,7 +36,7 @@ const UploadAndDisplayImage = () => {
           const formData = new FormData();
           formData.append("file", imageFile);
 
-          let res = fetch(url, {
+          fetch(url, {
             method: "POST",
             body: formData,
           })

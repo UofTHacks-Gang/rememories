@@ -45,7 +45,7 @@ async def getfaces(file: UploadFile = File(...)):
     with open(file_path, "wb") as new_file:
         new_file.write(file.file.read())
     
-    df = DeepFace.find(img_path=file_path,db_path="/Users/rmaxin/Desktop/UofTHacks/Reminiscent/backend/database")[0]
+    df = DeepFace.find(img_path=file_path,db_path="/Users/rmaxin/Desktop/UofTHacks/Reminiscent/backend/database",detector_backend="retinaface")[0]
     if len(df) > 0:
         length = 15
         if len(df) < 15:

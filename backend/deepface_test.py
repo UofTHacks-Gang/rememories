@@ -1,5 +1,7 @@
 # import matplotlib.pyplot as plt
 
+from deepface import DeepFace
+
 # print(type(df))
 
 # for person in result:
