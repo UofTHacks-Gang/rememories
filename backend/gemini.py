@@ -5,9 +5,9 @@ import uuid
 from typing import List, Tuple, Optional, Dict, Union
 
 import google.generativeai as genai
-import gradio as gr
 from PIL import Image
 import glob
+import main
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -18,18 +18,18 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 photos = []
 
-for filename in glob.glob('photos/*'):
-    im=Image.open(filename)
-    im = im.convert('RGB')
-    p = {
-        "img": im,
-        "file_name": filename,
-        "caption": "",
-        "haiku": ""
-    }
-    photos.append(p)
+# for filename in glob.glob('photos/*'):
+#     im=Image.open(filename)
+#     im = im.convert('RGB')
+#     p = {
+#         "img": im,
+#         "file_name": filename,
+#         "caption": "",
+#         "haiku": ""
+#     }
+#     photos.append(p)
 
-def main():
+def gemini(image_data):
     # parameters
     google_key = GOOGLE_API_KEY
     temperature = 0.5
@@ -51,7 +51,7 @@ def main():
     haiku_prompt = "Make a haiku for the photo."
 
     model = genai.GenerativeModel('gemini-pro-vision', )
-    for p in photos:
+    for p in image_data:
         caption_response = model.generate_content([caption_prompt, p["img"]], generation_config=generation_config)
         haiku_response = model.generate_content([haiku_prompt, p["img"]], generation_config=generation_config)
         p["caption"] =  caption_response.text
@@ -63,7 +63,4 @@ def main():
         print(f"Caption: {p['caption']}")
         print("====================")
         
-    
-if __name__ == "__main__":
-    main()
 
