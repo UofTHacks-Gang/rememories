@@ -47,5 +47,6 @@ async def getfaces(file: UploadFile = File(...)):
      
     facial_recognition_data = facial_recognition(file_path)
     description_data = gemini(facial_recognition_data)
-    print(description_data)
+    cohere_data = cohere(cohere_filtering_data)
+    print(cohere_data)
     # result = cohere(description)
