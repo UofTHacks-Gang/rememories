@@ -1,0 +1,61 @@
+import React, { useState } from "react";
+
+const UploadAndDisplayImage = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  return (
+    <div>
+      <h1>Facebook</h1>
+
+      {selectedImage && (
+        <div>
+          <img
+            alt="not found"
+            width={"250px"}
+            src={URL.createObjectURL(selectedImage)}
+          />
+          <br />
+          <button onClick={() => setSelectedImage(null)}>Remove</button>
+        </div>
+      )}
+
+      <br />
+      <br />
+
+      <input
+        type="file"
+        name="myImage"
+        onChange={(event) => {
+          console.log(event.target.files[0]);
+          setSelectedImage(event.target.files[0]);
+          const url = "http://127.0.0.1:8000/getfaces";
+
+          const imageFile = event.target.files[0];
+          //   // Data to be sent in the request body
+          const formData = new FormData();
+          formData.append("file", imageFile, imageFile.name);
+
+          let res = fetch(url, {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+          console.log(res);
+        }}
+      />
+    </div>
+  );
+};
+
+export default UploadAndDisplayImage;
