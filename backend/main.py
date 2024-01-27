@@ -1,9 +1,11 @@
+import base64
 import io
 from fastapi import FastAPI, Form, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
 
 import cv2
+from fastapi.responses import JSONResponse
 import pandas as pd
 from deepface import DeepFace
 
@@ -16,6 +18,7 @@ from deepface import DeepFace
 
 
 app = FastAPI()
+pd.set_option('display.max_colwidth', None)
 
 # CORS (Cross-Origin Resource Sharing) middleware
 app.add_middleware(
@@ -31,19 +34,40 @@ async def root():
     return {"message": "Hello World"}
 
 @app.post("/getfaces")
-async def getfaces(img_query: UploadFile):
+async def getfaces(file: UploadFile = File(...)):
 
 
     # image = Image.open(io.BytesIO(file))
     # image.show()
     # return {"upload_state": "complete"}
-    print(img_query)
-    # file_path = f"/Users/rmaxin/Desktop/UofTHacks/Reminiscent/backend/database/{file.filename}"
-    # with open(file_path, "wb") as file:
-    #     file.write(file.file.read())
+    print(file)
+    file_path = f"/Users/rmaxin/Desktop/UofTHacks/Reminiscent/backend/search/{file.filename}"
+    with open(file_path, "wb") as new_file:
+        new_file.write(file.file.read())
     
-    # df = DeepFace.find(img_path=file_path,db_path="/Users/rmaxin/Desktop/UofTHacks/Reminiscent/backend/database", threshold = 0.8, detector_backend="retinaface")
-    # print(len(df))
-    # df = df[0]
-    # return df.iloc[0].identity
-    # print(df.iloc)
+    df = DeepFace.find(img_path=file_path,db_path="/Users/rmaxin/Desktop/UofTHacks/Reminiscent/backend/database")[0]
+    if len(df) > 0:
+        length = 15
+        if len(df) < 15:
+            length = len(df)
+
+        # Extracting the list of identities from the DataFrame
+        image_urls = df.iloc[0:length].identity
+        distance = df.iloc[0:length].distance
+        threshold = df.iloc[0].threshold
+        print(image_urls,distance )
+        print(threshold)
+        
+        # ['identities'].to_list()
+
+        image_data = []
+        for url in image_urls:
+            with open(url, "rb") as image_file:
+                encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
+                image_data.append(encoded_image)
+        
+        return JSONResponse(content={"images": image_data})
+    else:
+        # If no faces are found, return an empty list
+        print("no faces found")
+        return JSONResponse(content={"images": []})

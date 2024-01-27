@@ -2,10 +2,11 @@ import React, { useState } from "react";
 
 const UploadAndDisplayImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [imageData, setImageData] = useState([]);
 
   return (
     <div>
-      <h1>Facebook</h1>
+      <h1>The Facebook</h1>
 
       {selectedImage && (
         <div>
@@ -33,7 +34,7 @@ const UploadAndDisplayImage = () => {
           const imageFile = event.target.files[0];
           //   // Data to be sent in the request body
           const formData = new FormData();
-          formData.append("file", imageFile, imageFile.name);
+          formData.append("file", imageFile);
 
           let res = fetch(url, {
             method: "POST",
@@ -46,14 +47,35 @@ const UploadAndDisplayImage = () => {
               return response.json();
             })
             .then((data) => {
-              console.log(data);
+              setImageData(data.images);
             })
             .catch((error) => {
               console.error("Error:", error);
             });
-          console.log(res);
         }}
       />
+      {imageData.length && <h1>Search results</h1>}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-around",
+        }}
+      >
+        {imageData.map((base64String, index) => (
+          <img
+            key={index}
+            src={`data:image/png;base64,${base64String}`}
+            alt={`Image ${index}`}
+            style={{
+              width: "150px",
+              height: "150px",
+              margin: "10px",
+              objectFit: "cover",
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 };
