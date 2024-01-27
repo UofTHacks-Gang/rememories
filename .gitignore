@@ -1,0 +1,7 @@
+.venv
+venv/
+venv.bak/
+.env
+env/
+
+backend/database/
