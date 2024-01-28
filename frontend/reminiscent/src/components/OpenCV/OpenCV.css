@@ -1,0 +1,89 @@
+.opencv-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.circularButton {
+    radius: 50px;
+    background-color: #FAC96A;
+    display: block;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.proceedButton {
+    width: 120px;
+    border-color: black;
+    font-size: 18px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 5px 5px -2px #fac6bc;
+    background-color: #FAECBC;
+    padding: 10px;
+    flex: 1;
+    margin: 0 20px;
+}
+
+.retryButton {
+    width: 120px;
+    border-color: black;
+    font-size: 18px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 5px 5px -2px #fac6bc;
+    background-color: #FAECBC;
+    padding: 10px;
+    flex: 1;
+    margin: 0 500px;
+}
+
+.borderCamera {
+    border: 28px solid #FEF7EB;
+    align-items: center;
+    justify-content: center;
+    width: 900px;
+    height: 450px;
+    position: relative;
+    text-align: center;
+    display: flex;
+}
+
+.innerCamera {
+    border: 15px solid #E1A542;
+    align-items: center;
+    justify-content: center;
+    width: 900px;
+    height: 450px;
+    position: relative;
+    text-align: center;
+    display: flex;
+
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+}
+
+.takenPhoto {
+    width: 128px;
+    height: auto;
+    z-index: 20;
+    position: absolute;
+    border: 1px solid black;
+    bottom: 5px;
+    right: 5px;
+
+}

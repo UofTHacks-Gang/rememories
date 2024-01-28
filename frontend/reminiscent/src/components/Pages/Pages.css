@@ -1,0 +1,15 @@
+.viewMemoriesButton {
+    /* width: 250px; */
+    border-color: black;
+    font-size: 18px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 2px -2px gray;
+    background-color: #FAECBC;
+    padding: 10px 20px 10px 10px;
+    display: flex;
+}
+
