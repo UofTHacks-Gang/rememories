@@ -124,8 +124,9 @@ async def getfaces(file: UploadFile = File(...)):
 
 
 
-@app.post("/getfaces")
-async def getfaces(emotion: str):
+
+@app.post("/getemotions")
+async def getemotions(emotion: str):
     emotional_data = app.state.emotions
 
     cohere_data = cohere_tags(emotional_data,emotion)
