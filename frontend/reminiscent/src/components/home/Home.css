@@ -1,0 +1,35 @@
+.home-container {
+    /* Set the background image */
+    background-image: url('../../asset/homeBackground.png');
+
+    /* Set background properties for styling */
+    padding: 150px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.project-name {
+    text-align: center;
+    font-size: 25px;
+    color: #87AA44;  
+}
+
+.title-home {
+    font-size: 70px;
+    color: #65A7A4;
+    text-align: center;
+    font-style: italic;
+    padding: 26px;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
