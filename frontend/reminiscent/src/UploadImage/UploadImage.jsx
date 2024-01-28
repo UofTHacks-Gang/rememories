@@ -26,7 +26,7 @@ const UploadAndDisplayImage = () => {
       <input
         type="file"
         name="myImage"
-        onChange={(event) => {
+        onChange={async (event) => {
           console.log(event.target.files[0]);
           setSelectedImage(event.target.files[0]);
           const url = "http://127.0.0.1:8000/getfaces";
@@ -36,22 +36,39 @@ const UploadAndDisplayImage = () => {
           const formData = new FormData();
           formData.append("file", imageFile);
 
-          fetch(url, {
+          const response = await fetch(url, {
             method: "POST",
             body: formData,
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-              return response.json();
-            })
-            .then((data) => {
-              setImageData(data.images);
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
+          });
+          if (!response.ok) {
+            console.error("Error fetching data:", response.statusText);
+            return;
+          }
+
+          const jba = await response.json();
+
+          setImageData(jba);
+          console.log(imageData);
+          console.log(jba);
+
+          // const reader = response.body.getReader();
+
+          // // Function to process each chunk of data
+          // async function processChunk({ done, value }) {
+          //   if (done) {
+          //     console.log("Data stream complete");
+          //     return;
+          //   }
+
+          //   // Update the UI with the received data
+          //   console.log(value);
+
+          //   // Continue reading the next chunk
+          //   return reader.read().then(processChunk);
+          // }
+
+          // // Start reading the stream
+          // return reader.read().then(processChunk);
         }}
       />
       {imageData.length && <h1>Search results</h1>}
@@ -62,10 +79,10 @@ const UploadAndDisplayImage = () => {
           justifyContent: "space-around",
         }}
       >
-        {imageData.map((base64String, index) => (
+        {imageData.map((url, index) => (
           <img
             key={index}
-            src={`data:image/png;base64,${base64String}`}
+            src={url}
             alt={`Image ${index}`}
             style={{
               width: "150px",
