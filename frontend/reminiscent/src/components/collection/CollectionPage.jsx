@@ -4,14 +4,13 @@ import "./Collection.css";
 import CollectionImage from "./CollectionImage";
 
 const CollectionPage = ({ setimageRefs, imageRefs }) => {
-  const [query, setQuery] = useState();
+  const [query, setQuery] = useState("");
   const [filtered, setfiltered] = useState([]);
-
-  let search;
 
   const handleChange = (e) => {
     e.preventDefault();
-    setQuery(search);
+    setQuery(e.target.value);
+    console.log(query);
   };
 
   return (
@@ -23,7 +22,7 @@ const CollectionPage = ({ setimageRefs, imageRefs }) => {
       <input
         type="text"
         className="collection-input"
-        value={search}
+        value={query}
         onChange={handleChange}
       />
       <div className="collection-padding">
@@ -49,12 +48,14 @@ const CollectionPage = ({ setimageRefs, imageRefs }) => {
             ]);
             const url = "http://127.0.0.1:8000/getemotions";
 
-            //   // Data to be sent in the request body
-            const data = { query: query };
+            const data = { emotion: query }; // Assuming 'query' is the emotion data
 
             const response = await fetch(url, {
               method: "POST",
-              body: data,
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
             });
             if (!response.ok) {
               console.error("Error fetching data:", response.statusText);

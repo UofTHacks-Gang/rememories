@@ -30,7 +30,7 @@ pd.set_option('display.max_colwidth', None)
 # CORS (Cross-Origin Resource Sharing) middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Specify the allowed origin(s)
+    allow_origins=["*"],  # Specify the allowed origin(s)
     allow_credentials=True,
     allow_methods=["*"],  # You can restrict to specific HTTP methods (e.g., ["GET", "POST"])
     allow_headers=["*"],  # You can restrict to specific HTTP headers
@@ -126,7 +126,8 @@ async def getfaces(file: UploadFile = File(...)):
 
 
 @app.post("/getemotions")
-async def getemotions(emotion: str):
+async def getemotions(emotion: dict):
+    # print(emotion)
     emotional_data = app.state.emotions
 
     cohere_data = cohere_tags(emotional_data,emotion)
