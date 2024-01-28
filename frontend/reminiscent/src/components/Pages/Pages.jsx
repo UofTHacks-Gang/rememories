@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import HTMLFlipBook from "react-pageflip";
+import { useNavigate } from "react-router-dom";
 import PageImage from "./PageImage";
 import "./Pages.css";
 
@@ -16,16 +17,24 @@ const Page = React.forwardRef((props, ref) => {
 const Pages = ({ setImageRef, imageRef }) => {
   const [query, setQuery] = useState();
   const [images, setImages] = useState([]);
+  let navigate = useNavigate();
 
   const handleChange = (e) => {
     e.preventDefault();
     setQuery(e.target.value);
   };
 
+  const handleViewClick = () => {
+    // Navigate to the upload page
+    navigate("/collection");
+  };
+
   return (
     <div className="pages-container">
       <div className="button-container">
-        <button className="viewMemoriesButton">View your memories</button>
+        <button onClick={handleViewClick} className="viewMemoriesButton">
+          View your memories
+        </button>
       </div>
       <div className="flip-book-container">
         <HTMLFlipBook
