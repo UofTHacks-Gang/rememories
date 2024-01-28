@@ -11,9 +11,9 @@ ReMemories takes your photo library and uses facial recognition to help identify
 Using Cohere API, we can also rank and filter the photos based on certain tags, keywords, objects, or emotions assigned to the photo during the initial filtering process. This advanced categorization helps quickly locate and revisit moments affiliated with certain tags, sentiments, or subjects.
 
 ## How we built it 🔧
-UI/UX: Figma
-Front-End: React.js
-Back-End: Python FastAPI, VertexAI, Gemini, Cohere API, Deepface
+* UI/UX: Figma
+* Front-End: React.js
+* Back-End: Python FastAPI, VertexAI, Gemini, Cohere API, Deepface
 
 ## Set up Instructions
 1. Clone the repository: git clone [repository URL]
