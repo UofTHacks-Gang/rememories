@@ -1,0 +1,41 @@
+.sun {
+width: 458px;
+height: 475px;
+
+}
+
+.loading-container {
+    width: "100%";
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sun-color {
+    justify-content: center;
+    align-items: center;
+    background-color: #FFEBD4;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  
+  }
+
+  .loading-text {
+    padding: 40px;
+  }
+
+.loading-text {
+        color: #65A7A4;
+        text-align: center;
+        font-size: 3rem;
+        line-height: 54.4px;
+        letter-spacing: tighter;
+        margin-top: 20px;
+        font-family:
+    
+}
