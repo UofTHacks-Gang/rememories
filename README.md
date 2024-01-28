@@ -15,6 +15,16 @@ UI/UX: Figma
 Front-End: React.js
 Back-End: Python FastAPI, VertexAI, Gemini, Cohere API, Deepface
 
+## Set up Instructions
+1. Clone the repository: git clone [repository URL]
+2. Install Node.js dependencies: npm install
+3. Set up a virtual environment for Python: python -m venv venv
+4. Activate the virtual environment:
+* On Windows: .\venv\Scripts\activate
+* On Unix or MacOS: source venv/bin/activate
+5. Install Python dependencies: pip install -r requirements.txt
+6. Run the application: npm start for frontend, uvicorn main:app --reload for backend.
+
 ## Challenges we ran into 🏃‍♂️
 During our project, we dealt with difficulties in properly prompting our Gemini API to get the desired results on our captions and understanding the nuances of our request. We wanted to ensure the full accuracy of our captions and find the right balance between specificity and generality.
 
