@@ -102,7 +102,7 @@ async def root():
 
 @app.post("/getfaces")
 async def getfaces(file: UploadFile = File(...)):
-
+    print(file)
 
     # image = Image.open(io.BytesIO(file))
     # image.show()

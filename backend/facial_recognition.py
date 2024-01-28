@@ -2,22 +2,36 @@ import base64
 
 import cv2
 import imutils
+import numpy as np
 import pandas as pd
 from deepface import DeepFace
 from fastapi.responses import JSONResponse
+from retinaface import RetinaFace
 
 detector_backend = "retinaface"
 
-def facial_recognition(image_query):
+def facial_recognition(image_query):    
     print("Entered facial recognition module")
     file_path = f"/Users/rmaxin/Desktop/UofTHacks/Reminiscent/backend/search/{image_query.filename}"
 
     with open(file_path, "wb") as new_file:
         new_file.write(image_query.file.read())
 
-    df = DeepFace.find(
-        img_path=file_path, db_path="/Users/rmaxin/Desktop/UofTHacks/Reminiscent/backend/database", detector_backend=detector_backend)[0]
-    if len(df) > 0:
+    faces = RetinaFace.extract_faces(img_path = file_path)
+    print("There are ", len(faces), " faces in the image")
+
+    
+    dfs = []
+    for face in faces:
+        df = DeepFace.find(
+            img_path=face, db_path="/Users/rmaxin/Desktop/UofTHacks/Reminiscent/backend/database",detector_backend="skip")[0]
+        print(df)
+        dfs.append(df)
+    
+    result = set(dfs[0]).intersection(*dfs[1:])
+        
+
+    if len(result) > 0:
         length = 15
         if len(df) < 15:
             length = len(df)

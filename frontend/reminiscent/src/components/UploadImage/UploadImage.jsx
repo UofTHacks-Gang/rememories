@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const UploadAndDisplayImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [imageData, setImageData] = useState([]);
+  const [imageRefs, setimageRefs] = useState([]);
 
   return (
     <div>
@@ -47,8 +47,8 @@ const UploadAndDisplayImage = () => {
 
           const jba = await response.json();
 
-          setImageData(jba);
-          console.log(imageData);
+          setimageRefs(jba);
+          console.log(imageRefs);
           console.log(jba);
 
           // const reader = response.body.getReader();
@@ -71,7 +71,7 @@ const UploadAndDisplayImage = () => {
           // return reader.read().then(processChunk);
         }}
       />
-      {imageData.length && <h1>Search results</h1>}
+      {imageRefs.length && <h1>Search results</h1>}
       <div
         style={{
           display: "flex",
@@ -79,7 +79,7 @@ const UploadAndDisplayImage = () => {
           justifyContent: "space-around",
         }}
       >
-        {imageData.map((url, index) => (
+        {imageRefs.map((url, index) => (
           <img
             key={index}
             src={url}
