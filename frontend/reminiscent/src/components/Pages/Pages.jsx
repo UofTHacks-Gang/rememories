@@ -1,9 +1,7 @@
-import React, {useState} from "react";
-import "./Pages.css";
+import React, { useState } from "react";
 import HTMLFlipBook from "react-pageflip";
-import { PageFlip } from "page-flip";
 import PageImage from "./PageImage";
-
+import "./Pages.css";
 
 const Page = React.forwardRef((props, ref) => {
   return (
@@ -15,38 +13,23 @@ const Page = React.forwardRef((props, ref) => {
   );
 });
 
-
-const Pages = (props) => {
+const Pages = ({ setImageRef, imageRef }) => {
   const [query, setQuery] = useState();
   const [images, setImages] = useState([]);
 
   const handleChange = (e) => {
     e.preventDefault();
     setQuery(e.target.value);
-    setImages([
-      {
-        img: "https://image.ibb.co/mmyvrc/anniversary_balloons_birthday_68369.jpg",
-        caption: "12/12/12",
-      },
-      {
-        img: "https://image.ibb.co/mmyvrc/anniversary_balloons_birthday_68369.jpg",
-        caption: "",
-      },
-      {
-        img: "https://image.ibb.co/mmyvrc/anniversary_balloons_birthday_68369.jpg",
-        caption: "",
-      },
-    ]);
   };
-  
+
   return (
     <div className="pages-container">
       <div className="button-container">
         <button className="viewMemoriesButton">View your memories</button>
       </div>
       <div className="flip-book-container">
-        <HTMLFlipBook 
-          width={400} 
+        <HTMLFlipBook
+          width={400}
           height={600}
           maxShadowOpacity={0.5}
           showCover={false}
@@ -66,9 +49,9 @@ const Pages = (props) => {
           <div className="demoPage">Page 2</div>
           <div className="demoPage">Page 3</div>
           <div className="demoPage">Page 4</div>
-          
-          <div>
-            <PageImage images={images} />
+
+          <div className="demoPage">
+            <PageImage images={imageRef} />
           </div>
         </HTMLFlipBook>
       </div>

@@ -51,7 +51,7 @@ generation_config = genai.types.GenerationConfig(
     top_p=top_p
 )
 
-async def gemini(image_urls):
+def gemini(image_urls, emotional_data):
     
     
     # tag_prompt = "Generate words that are in this image."
@@ -70,11 +70,12 @@ async def gemini(image_urls):
         }
         photos.append(p)
 
-    print("yielding next")
     model = app.state.llm
     print(model)
-    caption_prompt = "You are collecting photos for a photo album to share with your self. You are an expert at creating nostalgic captions from a second person perspective in less than 25 words. You never use first person words like `I`. You never use third person words like `they`. You never use specific names. You focus on topics of reminiscence, nostalgia, and especially happy thoughts. You always keep your captions super generic so that they can appeal to anyone. "
-    async for p in photos:
+    i = 0
+    for p in photos:
+        mood = emotional_data[i][0]["dominant_emotion"] 
+        caption_prompt = f"You are collecting photos for a photo album to share with your self. You are an expert at creating nostalgic captions from a second person perspective in less than 25 words. You never use first person words, including 'I'. You never use third person words, including 'they'. You never use specific names. You focus on topics of reminiscence, nostalgia, and especially ${mood} thoughts. You always keep your captions super generic so that they can appeal to anyone."
         caption_response = model.generate_content([caption_prompt, p["img"]], generation_config=generation_config)
         # haiku_response = model.generate_content([haiku_prompt, p["img"]], generation_config=generation_config)
         p["caption"] =  caption_response.text
@@ -85,6 +86,7 @@ async def gemini(image_urls):
         print(f"Haiku: {p['haiku']}")
         print(f"Caption: {p['caption']}")
         print("====================")
+        i+= 1
     
     return p
     
@@ -118,7 +120,9 @@ async def getfaces(file: UploadFile = File(...)):
     #         yield p
     print(search_results)
     print(type(search_results))
+    # caption_data = gemini(search_results, emotional_data)
     return search_results.to_list()
+    # return caption_data
     # return StreamingResponse(gem), media_type="text/plain")
 
 
@@ -127,8 +131,9 @@ async def getfaces(file: UploadFile = File(...)):
 
 @app.post("/getemotions")
 async def getemotions(emotion: dict):
-    # print(emotion)
+    print(emotion)
     emotional_data = app.state.emotions
+    # emotional_data = emotion_recognition(search_results)
 
     cohere_data = cohere_tags(emotional_data,emotion)
     return cohere_data

@@ -25,7 +25,12 @@ function App() {
           />
           <Route path="/upload" element={<DragAndDrop />} />
           <Route path="/loading" element={<LoadingPage />} />
-          <Route path="/pages" element={<Pages />} />
+          <Route
+            path="/pages"
+            element={
+              <Pages setimageRefs={setimageRefs} imageRefs={imageRefs} />
+            }
+          />
           <Route path="/ContinuePage" element={<ContinuePage />} />
           <Route path="/uploadpage" element={<UploadAndDisplayImage />} />
           <Route

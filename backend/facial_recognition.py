@@ -24,7 +24,7 @@ def facial_recognition(image_query):
     dfs = []
     for face in faces:
         df = DeepFace.find(
-            img_path=face, db_path="/Users/rmaxin/Desktop/UofTHacks/Reminiscent/backend/database",detector_backend="skip")[0]
+            img_path=face, db_path="/Users/rmaxin/Desktop/UofTHacks/Reminiscent/backend/database",threshold=0.6,detector_backend="skip")[0]
         print(df)
         dfs.append(df)
     

@@ -36,20 +36,20 @@ const UploadAndDisplayImage = () => {
           const formData = new FormData();
           formData.append("file", imageFile);
 
-          const response = await fetch(url, {
-            method: "POST",
-            body: formData,
-          });
-          if (!response.ok) {
-            console.error("Error fetching data:", response.statusText);
-            return;
-          }
+          // const response = await fetch(url, {
+          //   method: "POST",
+          //   body: formData,
+          // });
+          // if (!response.ok) {
+          //   console.error("Error fetching data:", response.statusText);
+          //   return;
+          // }
 
-          const jba = await response.json();
+          // const jba = await response.json();
 
-          setimageRefs(jba);
-          console.log(imageRefs);
-          console.log(jba);
+          // setimageRefs(jba);
+          // console.log(imageRefs);
+          // console.log(jba);
 
           // const reader = response.body.getReader();
 
