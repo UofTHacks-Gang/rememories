@@ -3,7 +3,7 @@ import "./Pages.css";
 import HTMLFlipBook from "react-pageflip";
 import { PageFlip } from "page-flip";
 import PageImage from "./PageImage";
-
+import { useNavigate } from "react-router-dom";
 
 const Page = React.forwardRef((props, ref) => {
   return (
@@ -19,6 +19,7 @@ const Page = React.forwardRef((props, ref) => {
 const Pages = (props) => {
   const [query, setQuery] = useState();
   const [images, setImages] = useState([]);
+  let navigate = useNavigate(); 
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -38,15 +39,22 @@ const Pages = (props) => {
       },
     ]);
   };
+
+  const handleViewClick = () => {
+    // Navigate to the upload page
+    navigate("/collection");
+  };
   
   return (
     <div className="pages-container">
       <div className="button-container">
-        <button className="viewMemoriesButton">View your memories</button>
+        <button onClick={handleViewClick} className="viewMemoriesButton">
+          View your memories
+        </button>
       </div>
       <div className="flip-book-container">
-        <HTMLFlipBook 
-          width={400} 
+        <HTMLFlipBook
+          width={400}
           height={600}
           maxShadowOpacity={0.5}
           showCover={false}
@@ -66,7 +74,7 @@ const Pages = (props) => {
           <div className="demoPage">Page 2</div>
           <div className="demoPage">Page 3</div>
           <div className="demoPage">Page 4</div>
-          
+
           <div>
             <PageImage images={images} />
           </div>
